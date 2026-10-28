@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f6f3">
+  <title>Кадровый кабинет — HR</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#dashboard" aria-label="Кадровый кабинет, главная">
+        <span class="brand-mark"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3.8 28 10.7v10.6l-12 6.9-12-6.9V10.7l12-6.9Z"/><path d="M10 19.6v-7.2l6-3.5 6 3.5v7.2l-6 3.5-6-3.5Z"/><path d="M16 8.9v14.2m-6-10.7 12 7.2m0-7.2-12 7.2"/></svg></span>
+        <span class="brand-copy"><b>кадровый</b><small>КАБИНЕТ HR</small></span>
+      </a>
+
+      <div class="workspace-label">РАБОЧЕЕ ПРОСТРАНСТВО</div>
+      <nav class="main-nav" aria-label="Основная навигация">
+        <button class="nav-item active" data-page="dashboard"><span class="nav-icon">◫</span>Обзор<span class="nav-arrow">↗</span></button>
+        <button class="nav-item" data-page="candidates"><span class="nav-icon">♙</span>Кандидаты<span class="nav-count" id="nav-candidates">0</span></button>
+        <button class="nav-item" data-page="vacancies"><span class="nav-icon">▤</span>Вакансии</button>
+        <button class="nav-item" data-page="onboarding"><span class="nav-icon">✳</span>Приём сотрудника</button>
+      </nav>
+
+      <section class="sidebar-contact">
+        <div class="contact-orbit"><span>↗</span></div>
+        <div class="contact-kicker">СВЯЗЬ С РАБОТОДАТЕЛЕМ</div>
+        <div class="contact-value" id="side-phone">[телефон работодателя]</div>
+        <div class="contact-value email" id="side-email">[почта работодателя]</div>
+        <button class="contact-edit" id="edit-contacts">Изменить контакты <span>→</span></button>
+      </section>
+      <div class="sidebar-bottom"><span class="online-dot"></span>Демо-режим <span>v1.0</span></div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobile-menu" aria-label="Открыть меню">☰</button>
+        <div class="breadcrumbs"><span>Рабочее пространство</span><b>/</b><strong id="crumb-current">Обзор</strong></div>
+        <div class="topbar-right">
+          <div class="today" id="today"></div>
+          <button class="icon-button" id="help-button" aria-label="Информация о демо">i</button>
+          <div class="user-chip"><span class="avatar">А</span><span><b>HR-специалист</b><small>Администратор</small></span><span class="chevron">⌄</span></div>
+        </div>
+      </header>
+
+      <section class="content">
+        <div class="page-heading">
+          <div><div class="eyebrow" id="page-eyebrow">СРЕДА, В КОТОРОЙ ЛЮДИ РАСТУТ</div><h1 id="page-title">Доброе утро, Анна <span class="wave">✳</span></h1><p id="page-subtitle">Вот что происходит в подборе сегодня.</p></div>
+          <button class="button button-dark" id="add-candidate"><span>＋</span> Добавить кандидата</button>
+        </div>
+
+        <section class="page-view visible" id="page-dashboard">
+          <div class="stats-grid">
+            <article class="stat-card"><div class="stat-top"><span>Кандидаты</span><span class="stat-icon lilac">♙</span></div><div class="stat-number" id="stat-candidates">0</div><div class="stat-foot"><span class="trend">↗</span> в активном подборе <span class="foot-date">за всё время</span></div></article>
+            <article class="stat-card"><div class="stat-top"><span>Открытые вакансии</span><span class="stat-icon mint">▤</span></div><div class="stat-number" id="stat-vacancies">0</div><div class="stat-foot"><span class="status-dot green"></span> <span id="vacancy-foot">набор продолжается</span></div></article>
+            <article class="stat-card"><div class="stat-top"><span>Интервью</span><span class="stat-icon peach">◷</span></div><div class="stat-number" id="stat-interviews">0</div><div class="stat-foot"><span class="trend">↗</span> кандидатов на встрече</div></article>
+            <article class="stat-card stat-highlight"><div class="stat-top"><span>Уже в команде</span><span class="stat-icon dark-icon">✳</span></div><div class="stat-number" id="stat-hired">0</div><div class="stat-foot">ваши новые коллеги <span class="sparkle">✦</span></div></article>
+          </div>
+
+          <div class="dashboard-grid">
+            <section class="panel pipeline-panel">
+              <div class="panel-heading"><div><span class="section-kicker">ВАШ ПОДБОР</span><h2>Воронка кандидатов</h2></div><button class="text-button" data-goto="candidates">Все кандидаты <span>→</span></button></div>
+              <div class="pipeline" id="pipeline"></div>
+              <div class="pipeline-bars" id="pipeline-bars"></div>
+            </section>
+            <section class="panel activity-panel">
+              <div class="panel-heading"><div><span class="section-kicker">СЕГОДНЯ</span><h2>Ближайшие интервью</h2></div><span class="calendar-badge">◷</span></div>
+              <div id="interview-list" class="interview-list"></div>
+              <button class="button button-outline full-button" data-goto="candidates">Открыть список кандидатов <span>→</span></button>
+            </section>
+          </div>
+
+          <section class="panel recent-panel">
+            <div class="panel-heading"><div><span class="section-kicker">ПОСЛЕДНИЕ ОБНОВЛЕНИЯ</span><h2>Недавно добавлены</h2></div><button class="text-button" data-goto="candidates">К списку <span>→</span></button></div>
+            <div class="table-wrap"><table><thead><tr><th>КАНДИДАТ</th><th>ВАКАНСИЯ</th><th>ОПЫТ</th><th>ЭТАП</th><th></th></tr></thead><tbody id="recent-body"></tbody></table></div>
+          </section>
+        </section>
+
+        <section class="page-view" id="page-candidates">
+          <div class="panel list-panel">
+            <div class="list-toolbar"><div class="search-box"><span>⌕</span><input id="search-candidates" type="search" placeholder="Имя, должность или email"></div><select id="filter-vacancy" aria-label="Фильтр по вакансии"><option value="">Все вакансии</option></select><select id="filter-stage" aria-label="Фильтр по этапу"><option value="">Все этапы</option></select><select id="filter-experience" aria-label="Фильтр по опыту"><option value="">Любой опыт</option><option value="0">До 1 года</option><option value="1">1–3 года</option><option value="3">3+ года</option></select></div>
+            <div class="table-wrap"><table><thead><tr><th>КАНДИДАТ</th><th>ВАКАНСИЯ</th><th>ОПЫТ</th><th>КОНТАКТЫ</th><th>ЭТАП ОТБОРА</th><th></th></tr></thead><tbody id="candidates-body"></tbody></table></div>
+            <div class="table-footer"><span id="candidate-total">0 кандидатов</span><span>Нажмите на этап, чтобы изменить статус</span></div>
+          </div>
+        </section>
+
+        <section class="page-view" id="page-vacancies">
+          <div class="vacancy-intro"><div><span class="section-kicker">КОМАНДА РАСТЁТ</span><h2>Открытые возможности</h2><p>Роли, для которых мы сейчас ищем своих людей.</p></div><button class="button button-outline" id="add-vacancy">＋ Новая вакансия</button></div>
+          <div class="vacancy-grid" id="vacancy-grid"></div>
+        </section>
+
+        <section class="page-view" id="page-onboarding">
+          <div class="onboarding-layout">
+            <section class="panel onboarding-form-panel"><div class="panel-heading"><div><span class="section-kicker">ПЕРВЫЙ ДЕНЬ — НАЧАЛО ПУТИ</span><h2>Приём нового сотрудника</h2></div><span class="form-spark">✳</span></div>
+              <p class="form-intro">Заполните карточку нового коллеги и отметьте важные шаги оформления.</p>
+              <form id="onboarding-form">
+                <div class="form-grid"><label class="field span-2"><span>ФИО сотрудника <i>*</i></span><input name="name" required placeholder="Например, Иван Иванов"></label><label class="field"><span>Должность <i>*</i></span><input name="position" required placeholder="Специалист по продажам"></label><label class="field"><span>Дата выхода <i>*</i></span><input name="startDate" type="date" required></label><label class="field"><span>Телефон</span><input name="phone" type="tel" placeholder="+7 (___) ___-__-__"></label><label class="field"><span>Рабочая почта</span><input name="email" type="email" placeholder="name@company.kz"></label><label class="field span-2"><span>Ответственный руководитель</span><input name="manager" placeholder="ФИО руководителя"></label></div>
+                <div class="checklist-block"><div class="checklist-head"><div><span class="section-kicker">ЧЕК-ЛИСТ ОФОРМЛЕНИЯ</span><p>Отмечайте выполненные шаги</p></div><span class="checklist-count" id="checklist-count">0 / 5</span></div><div class="checklist-items" id="checklist-items"></div></div>
+                <div class="consent-note"><span class="notice-icon">i</span><span>Форма — демонстрационная. Не вносите настоящие персональные данные: сохранение идёт только в этот браузер.</span></div>
+                <button class="button button-dark submit-onboarding" type="submit">Создать карточку сотрудника <span>→</span></button>
+              </form>
+            </section>
+            <aside class="panel onboarded-panel"><div class="panel-heading"><div><span class="section-kicker">ПОСЛЕДНИЕ ОФОРМЛЕНИЯ</span><h2>Новые коллеги</h2></div><span class="stat-icon mint">✳</span></div><div id="onboarded-list" class="onboarded-list"></div></aside>
+          </div>
+        </section>
+
+        <footer class="app-footer"><span>КАДРОВЫЙ КАБИНЕТ <span class="footer-dot">·</span> ДЕМО-ПРОЕКТ</span><span>Данные этого демонстрационного сайта хранятся только в браузере.</span></footer>
+      </section>
+    </main>
+  </div>
+
+  <main class="candidate-portal" id="candidate-portal" hidden></main>
+
+  <dialog id="candidate-dialog" class="modal"><form id="candidate-form" class="modal-form">
+    <div class="modal-head"><div><span class="section-kicker">НОВАЯ КАРТОЧКА</span><h2>Добавить кандидата</h2></div><button class="close-button" type="button" data-close="candidate-dialog" aria-label="Закрыть">×</button></div>
+    <div class="modal-body">
+      <div class="form-grid"><label class="field span-2"><span>ФИО кандидата <i>*</i></span><input name="name" required placeholder="Имя и фамилия"></label><label class="field"><span>Телефон <i>*</i></span><input name="phone" type="tel" required placeholder="+7 (___) ___-__-__"></label><label class="field"><span>Электронная почта <i>*</i></span><input name="email" type="email" required placeholder="name@example.kz"></label><label class="field"><span>Желаемая должность <i>*</i></span><input name="position" required placeholder="Например, дизайнер"></label><label class="field"><span>Связанная вакансия</span><select name="vacancy" id="candidate-vacancy"></select></label><label class="field"><span>Опыт работы, лет <i>*</i></span><input name="experience" type="number" required min="0" max="60" step="1" placeholder="3"></label><label class="field"><span>Этап отбора</span><select name="stage" id="candidate-stage"></select></label><label class="field span-2"><span>Заметки HR</span><textarea name="notes" rows="3" placeholder="Ключевые навыки, впечатления от разговора"></textarea></label></div>
+      <section class="upload-block"><div class="upload-heading"><div><span class="section-kicker">ФАЙЛЫ КАНДИДАТА</span><p>Резюме и документы для оформления</p></div><span class="upload-count" id="upload-count">0 файлов</span></div><label class="file-drop" for="candidate-files"><input id="candidate-files" type="file" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"><span class="upload-symbol">↑</span><span><b>Выберите файлы</b> или перетащите сюда</span><small>PDF, DOC, DOCX, JPG или PNG · до 10 МБ каждый</small></label><ul id="file-list" class="file-list"></ul><div class="inline-note">В демо сохраняются только имена файлов. Содержимое никуда не загружается.</div></section>
+      <section class="consent-block"><div class="consent-title"><span class="consent-shield">✓</span><div><span class="section-kicker">СОГЛАСИЕ НА ОБРАБОТКУ</span><h3>Персональные данные</h3></div></div><div class="consent-copy">Я, <b id="consent-name-preview">[ФИО кандидата]</b>, даю согласие работодателю на сбор и обработку моих персональных данных, предоставленных мной в анкете и приложенных документах, исключительно для рассмотрения кандидатуры и связи по вакансии. Согласие демонстрационное и требует юридической проверки перед использованием.</div><label class="consent-check"><input type="checkbox" name="consent" id="consent-check"><span class="custom-check"></span><span>Я ознакомлен(а) и даю согласие на обработку указанных персональных данных <i>*</i></span></label><div class="form-grid consent-details"><label class="field"><span>ФИО подписанта <i>*</i></span><input name="signer" id="signer-name" required placeholder="ФИО полностью"></label><label class="field"><span>Дата подписания <i>*</i></span><input name="signedAt" type="date" required></label></div><div class="signature-wrap"><div class="signature-head"><span>Электронная подпись <i>*</i></span><button class="clear-signature" type="button" id="clear-signature">Очистить</button></div><canvas id="signature-pad" width="620" height="130" aria-label="Поле для электронной подписи"></canvas><small>Нарисуйте подпись мышью или пальцем</small></div></section>
+      <div class="consent-note modal-notice"><span class="notice-icon">i</span><span><b>Демо-режим:</b> кандидаты и данные подписи остаются в локальном хранилище этого браузера. Документы не передаются работодателю. Для реального использования нужен защищённый сервер, политика хранения и проверенный юристом текст согласия.</span></div>
+      <section class="workflow-controls" id="workflow-controls" hidden>
+        <div class="workflow-heading"><div><span class="section-kicker">СЛЕДУЮЩИЙ ШАГ КАНДИДАТА</span><h3>Тестирование, опрос и оффер</h3></div><span class="workflow-status" id="workflow-status">Ссылка ещё не создана</span></div>
+        <p class="workflow-note">Создайте персональную ссылку: кандидат сможет пройти тест, заполнить опрос и приложить названия документов. В демо результаты доступны только в этом браузере.</p>
+        <label class="field workflow-url-field"><span>Ссылка на внешнее тестирование <small>необязательно</small></span><input id="test-url" type="url" placeholder="https://…"></label>
+        <div class="workflow-link-row"><button class="button button-outline" type="button" id="create-portal-link">Создать ссылку кандидату</button><input id="portal-link" readonly placeholder="Ссылка появится здесь"><button class="button button-outline" type="button" id="copy-portal-link" disabled>Копировать</button><button class="button button-outline" type="button" id="email-portal-link" disabled>Письмо</button></div>
+        <div class="offer-editor"><div class="section-kicker">ОФФЕР КАНДИДАТУ</div><div class="form-grid"><label class="field"><span>Предложение, зарплата</span><input id="offer-salary" placeholder="Например, 450 000 ₸ в месяц"></label><label class="field"><span>Предлагаемая дата выхода</span><input id="offer-start-date" type="date"></label><label class="field span-2"><span>Сопроводительное сообщение</span><textarea id="offer-message" rows="2" placeholder="Будем рады видеть вас в команде!"></textarea></label></div><div class="offer-editor-bottom"><span id="offer-response">Оффер ещё не отправлен</span><button class="button button-dark" type="button" id="send-offer">Отправить оффер по ссылке <span>→</span></button></div></div>
+      </section>
+    </div>
+    <div class="modal-actions"><button class="button button-outline" type="button" data-close="candidate-dialog">Отмена</button><button class="button button-dark" type="submit">Сохранить кандидата <span>→</span></button></div>
+  </form></dialog>
+
+  <dialog id="contact-dialog" class="modal compact-modal"><form id="contacts-form" class="modal-form"><div class="modal-head"><div><span class="section-kicker">ДЛЯ СВЯЗИ</span><h2>Контакты работодателя</h2></div><button class="close-button" type="button" data-close="contact-dialog">×</button></div><div class="modal-body"><label class="field"><span>Телефон</span><input name="phone" type="tel" placeholder="[телефон работодателя]"></label><label class="field"><span>Электронная почта</span><input name="email" type="email" placeholder="[почта работодателя]"></label></div><div class="modal-actions"><button type="button" class="button button-outline" data-close="contact-dialog">Отмена</button><button class="button button-dark" type="submit">Сохранить</button></div></form></dialog>
+
+  <dialog id="vacancy-dialog" class="modal compact-modal"><form id="vacancy-form" class="modal-form"><div class="modal-head"><div><span class="section-kicker">КОМАНДА РАСТЁТ</span><h2>Новая вакансия</h2></div><button class="close-button" type="button" data-close="vacancy-dialog">×</button></div><div class="modal-body"><label class="field"><span>Название должности <i>*</i></span><input name="title" required placeholder="Например, аналитик данных"></label><label class="field"><span>Отдел</span><input name="department" placeholder="Например, продукт"></label><label class="field"><span>Формат работы</span><select name="mode"><option>Гибридный</option><option>В офисе</option><option>Удалённо</option></select></label></div><div class="modal-actions"><button type="button" class="button button-outline" data-close="vacancy-dialog">Отмена</button><button class="button button-dark" type="submit">Создать вакансию</button></div></form></dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"><span>✓</span><div><b id="toast-title">Готово</b><small id="toast-copy">Изменения сохранены</small></div></div>
+  <script src="app.js"></script>
+</body>
+</html>
